@@ -100,12 +100,14 @@ padding: 30px;
 pointer-events: auto;
 }
 
-/* .show class removed - info-display always visible */
-
+/* Smooth fade-in animations for info elements */
 .info-display h3 {
 font-size: 24px;
 margin-bottom: 15px;
 color: #fff;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.6s ease;
 }
 
 .info-display p {
@@ -113,6 +115,9 @@ font-size: 14px;
 line-height: 1.6;
 margin-bottom: 20px;
 color: #ccc;
+opacity: 0;
+transform: translateY(20px);
+transition: all 0.6s ease;
 }
 
 .info-display button {
@@ -123,8 +128,14 @@ padding: 10px 25px;
 border-radius: 25px;
 font-weight: 600;
 cursor: pointer;
-transition: all 0.3s ease;
+transition: all 0.6s ease;
+opacity: 0;
+transform: translateY(20px);
 }
+
+
+
+/* .show class removed - info-display always visible */
 
 .info-display button:hover {
 background: #f0f0f0;
@@ -250,17 +261,20 @@ background: linear-gradient(to top, rgb(0 0 0 / 92%) 0%, rgb(0 0 0 / 0%) 100%);
   .info-display h3 {
     font-size: 18px;
     margin-bottom: 10px;
+    animation-delay: 0.1s;
   }
 
   .info-display p {
     font-size: 12px;
     line-height: 1.4;
     margin-bottom: 15px;
+    animation-delay: 0.3s;
   }
 
   .info-display button {
     padding: 8px 20px;
     font-size: 14px;
+    animation-delay: 0.5s;
   }
 
   /* Navigation buttons - mobile */
@@ -347,15 +361,18 @@ background: linear-gradient(to top, rgb(0 0 0 / 92%) 0%, rgb(0 0 0 / 0%) 100%);
 
   .info-display h3 {
     font-size: 16px;
+    animation-delay: 0.1s;
   }
 
   .info-display p {
     font-size: 11px;
+    animation-delay: 0.3s;
   }
 
   .info-display button {
     padding: 6px 16px;
     font-size: 12px;
+    animation-delay: 0.5s;
   }
 
   .nav-btn {

@@ -43,9 +43,37 @@ document.addEventListener('DOMContentLoaded', function() {
         const description = imgBox.getAttribute('data-description');
         const buttonText = imgBox.getAttribute('data-button');
         
+        // Add fade-out effect first
+        infoTitle.style.opacity = '0';
+        infoTitle.style.transform = 'translateY(20px)';
+        infoDescription.style.opacity = '0';
+        infoDescription.style.transform = 'translateY(20px)';
+        infoButton.style.opacity = '0';
+        infoButton.style.transform = 'translateY(20px)';
+        
+        // Update content
         infoTitle.textContent = title;
         infoDescription.textContent = truncateDescription(description);
         infoButton.textContent = buttonText;
+        
+        // Add fade-in effect with staggered timing
+        setTimeout(() => {
+            infoTitle.style.transition = 'all 0.6s ease';
+            infoTitle.style.opacity = '1';
+            infoTitle.style.transform = 'translateY(0)';
+        }, 100);
+        
+        setTimeout(() => {
+            infoDescription.style.transition = 'all 0.6s ease';
+            infoDescription.style.opacity = '1';
+            infoDescription.style.transform = 'translateY(0)';
+        }, 300);
+        
+        setTimeout(() => {
+            infoButton.style.transition = 'all 0.6s ease';
+            infoButton.style.opacity = '1';
+            infoButton.style.transform = 'translateY(0)';
+        }, 500);
         
         // Update current index based on the imgBox
         const index = Array.from(imgBoxes).indexOf(imgBox);
@@ -84,11 +112,55 @@ document.addEventListener('DOMContentLoaded', function() {
             if (Math.abs(normalizedCurrentRotation - normalizedItemPosition) < 5) {
                 if (currentIndex !== i) {
                     currentIndex = i;
-                    setInfoFromBox(imgBoxes[i]);
+                    animateInfoChange(imgBoxes[i]);
                 }
                 break;
             }
         }
+    }
+
+    // Function to animate info change with smooth fade-in from bottom
+    function animateInfoChange(imgBox) {
+        // Remove active class from all boxes
+        imgBoxes.forEach(box => box.classList.remove('active'));
+        
+        // Add active class to current box
+        imgBox.classList.add('active');
+        
+        const title = imgBox.getAttribute('data-title');
+        const description = imgBox.getAttribute('data-description');
+        const buttonText = imgBox.getAttribute('data-button');
+        
+        // Fade out current content
+        infoTitle.style.opacity = '0';
+        infoTitle.style.transform = 'translateY(20px)';
+        infoDescription.style.opacity = '0';
+        infoDescription.style.transform = 'translateY(20px)';
+        infoButton.style.opacity = '0';
+        infoButton.style.transform = 'translateY(20px)';
+        
+        // Update content after fade out
+        setTimeout(() => {
+            infoTitle.textContent = title;
+            infoDescription.textContent = truncateDescription(description);
+            infoButton.textContent = buttonText;
+            
+            // Fade in new content with staggered timing
+            setTimeout(() => {
+                infoTitle.style.opacity = '1';
+                infoTitle.style.transform = 'translateY(0)';
+            }, 50);
+            
+            setTimeout(() => {
+                infoDescription.style.opacity = '1';
+                infoDescription.style.transform = 'translateY(0)';
+            }, 200);
+            
+            setTimeout(() => {
+                infoButton.style.opacity = '1';
+                infoButton.style.transform = 'translateY(0)';
+            }, 350);
+        }, 300);
     }
 
     // Function to start auto rotation
@@ -115,7 +187,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function goToNext() {
         currentIndex = (currentIndex + 1) % imgBoxes.length;
         const nextImgBox = imgBoxes[currentIndex];
-        setInfoFromBox(nextImgBox);
+        animateInfoChange(nextImgBox);
         
         // Calculate the target rotation for this item
         const itemAngle = 360 / imgBoxes.length;
@@ -133,7 +205,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function goToPrevious() {
         currentIndex = (currentIndex - 1 + imgBoxes.length) % imgBoxes.length;
         const prevImgBox = imgBoxes[currentIndex];
-        setInfoFromBox(prevImgBox);
+        animateInfoChange(prevImgBox);
         
         // Calculate the target rotation for this item
         const itemAngle = 360 / imgBoxes.length;
@@ -158,7 +230,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Set first image as active by default
     const firstImgBox = document.querySelector('.imgBx[style*="--i:1"]');
     if (firstImgBox) {
-        setInfoFromBox(firstImgBox);
+        animateInfoChange(firstImgBox);
         currentIndex = 0;
         // Don't call slideToCenter here, let auto rotation handle it
         updateNavigationButtons();
@@ -167,11 +239,33 @@ document.addEventListener('DOMContentLoaded', function() {
     // Start auto rotation immediately when page loads
     startAutoRotation();
 
+    // Trigger initial animations after a short delay
+    setTimeout(() => {
+        const infoTitle = document.getElementById('info-title');
+        const infoDescription = document.getElementById('info-description');
+        const infoButton = document.getElementById('info-button');
+        
+        if (infoTitle && infoDescription && infoButton) {
+            infoTitle.style.opacity = '1';
+            infoTitle.style.transform = 'translateY(0)';
+            
+            setTimeout(() => {
+                infoDescription.style.opacity = '1';
+                infoDescription.style.transform = 'translateY(0)';
+            }, 200);
+            
+            setTimeout(() => {
+                infoButton.style.opacity = '1';
+                infoButton.style.transform = 'translateY(0)';
+            }, 400);
+        }
+    }, 100);
+
     // Add click event to each image box
     imgBoxes.forEach((imgBox, index) => {
         imgBox.addEventListener('click', function(e) {
             stopAutoRotation(); // Stop auto rotation when user clicks
-            setInfoFromBox(this);
+            animateInfoChange(this);
             currentIndex = index;
             
             // Calculate the target rotation for this item
