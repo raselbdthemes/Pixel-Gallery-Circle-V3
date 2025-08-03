@@ -194,8 +194,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetPosition = 270.12;
         const targetAngle = -(currentIndex * itemAngle) + targetPosition;
         
-        // Smoothly animate to the target position
-        currentRotation = targetAngle;
+        // Calculate the shortest rotation path
+        let rotationDifference = targetAngle - currentRotation;
+        
+        // Normalize rotation to find shortest path
+        while (rotationDifference > 180) rotationDifference -= 360;
+        while (rotationDifference < -180) rotationDifference += 360;
+        
+        // Apply the rotation smoothly
+        currentRotation += rotationDifference;
         iconContainer.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`;
         
         updateNavigationButtons();
@@ -212,8 +219,15 @@ document.addEventListener('DOMContentLoaded', function() {
         const targetPosition = 270.12;
         const targetAngle = -(currentIndex * itemAngle) + targetPosition;
         
-        // Smoothly animate to the target position
-        currentRotation = targetAngle;
+        // Calculate the shortest rotation path
+        let rotationDifference = targetAngle - currentRotation;
+        
+        // Normalize rotation to find shortest path
+        while (rotationDifference > 180) rotationDifference -= 360;
+        while (rotationDifference < -180) rotationDifference += 360;
+        
+        // Apply the rotation smoothly
+        currentRotation += rotationDifference;
         iconContainer.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`;
         
         updateNavigationButtons();
@@ -273,8 +287,15 @@ document.addEventListener('DOMContentLoaded', function() {
             const targetPosition = 270.12;
             const targetAngle = -(index * itemAngle) + targetPosition;
             
-            // Smoothly animate to the target position
-            currentRotation = targetAngle;
+            // Calculate the shortest rotation path
+            let rotationDifference = targetAngle - currentRotation;
+            
+            // Normalize rotation to find shortest path
+            while (rotationDifference > 180) rotationDifference -= 360;
+            while (rotationDifference < -180) rotationDifference += 360;
+            
+            // Apply the rotation smoothly
+            currentRotation += rotationDifference;
             iconContainer.style.transform = `translate(-50%, -50%) rotate(${currentRotation}deg)`;
             
             updateNavigationButtons();
